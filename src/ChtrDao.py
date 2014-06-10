@@ -1,5 +1,3 @@
-from models.User import User 
-from models.Room import Room 
 from DataSource import DataSource
 from Singleton import singleton
 
