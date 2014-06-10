@@ -1,5 +1,4 @@
 from ChtrDao import ChtrDao
-import models.RequestTypes
 import json
 
 class ChtrService(object):
