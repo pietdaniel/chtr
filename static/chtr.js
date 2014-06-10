@@ -25,9 +25,23 @@ function getWebSocket() {
     return connection;
 }
 
+function getLocation() {
+  lg("location")
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+   console.log("Geolocation is not supported by this browser.");
+  }
+}
+function showPosition(position) {
+  console.log(position);
+}
 
 function main() {
     ws = new getWebSocket();
+    getLocation();
+
+    $("#welcome").fadeIn(4000);
 
     $("#chat-form").submit(function() {
         return false;
@@ -42,7 +56,10 @@ function main() {
 
     function onSubmit(str) {
         if (ws.UID) {
-            $("#chat-box").find('tbody').append($('<tr>').text(str));
+            var $message = $('<tr>').text(str).hide();
+            $("#chat-box").find('tbody').append($message);
+            $message.show('slow');
+            $("#chat-input").val('');
             msg = buildMessage(str)
             ws.send(msg);
         }   
@@ -55,12 +72,6 @@ function main() {
         }
         return JSON.stringify(out)
     }
-
-    // function doMsg() {
-    //     console.log(ws.readyState)
-    // }
-    // doMsg()
-    // setTimeout(doMsg,2000);
 }
 
 $(document).ready(function(){
