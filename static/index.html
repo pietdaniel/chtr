@@ -3,8 +3,8 @@
 	<head>
         <title>Chtr</title>
         <link rel="stylesheet" href="chtr.css" />
-        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
         <script src="chtr.js"></script>
         <!--[if !IE 7]>
           <style type="text/css">
@@ -15,17 +15,18 @@
 	<body> 
     <div id="wrap">
       <div id="main">
+        <div id="map-canvas"></div>
         <div class="chat-wrapper">
-              <div class="chat-scroll">
-                <table id='chat-box'>
-                  <tbody>
-                    <tr>
-                      <td><p id="welcome">Welcome to the chat</p></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <div class="chat-scroll">
+            <table id='chat-box'>
+              <tbody>
+                <tr>
+                  <td><p id="welcome">Welcome to the chat</p></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
     <div id="footer">
