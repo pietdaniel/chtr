@@ -15,7 +15,7 @@ function getWebSocket(onopen) {
       console.log('Server: ' + e.data);
       blob = $.parseJSON(e.data)
       if (blob.OPEN){
-        this.UID = blob.UID  
+        this.UID = blob.UID
       }
       if (blob.MSG && blob.UID !== this.UID) {
         $("#chat-box").find('tbody').append($('<tr>').text(blob.MSG)); 
