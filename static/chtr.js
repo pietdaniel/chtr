@@ -1,5 +1,5 @@
 var MY_MAP;
-function lg(str) {console.log(str);}
+var lg = console.log.bind( console );
 
 function scrollToBottom() {
   var mainDiv = $('#main');
@@ -17,7 +17,6 @@ function main() {
         ws.send(buildLocation(pos.toString()));
         MY_MAP.getBounds();
       });
-        
 
       $("#chat-input").focus(); 
 

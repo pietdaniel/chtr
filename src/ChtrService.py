@@ -6,9 +6,8 @@ class ChtrService(object):
     self.dao = ChtrDao.Instance()
     self.count = 0
 
-  def buildAllLocMessage(self):
-    print 'buildAllLocMessage'
-    out = { "LOCS": str([self.dao.getAllLocations()]) }
+  def buildAllLocMessage(self, locs):
+    out = { "LOCS": locs }
     return json.dumps(out)
 
   def dispatch(self, message, peer_uid):
@@ -31,7 +30,9 @@ class ChtrService(object):
           self.dao.deleteWebsocket(uid)
           self.dao.deleteLocation(uid)
       elif ('LOC' in msg):
-        self.dao.getWebsocket(peer_uid).send(self.buildAllLocMessage())
+        locs = self.dao.getAllLocations()
+        if (len(locs) > 0):
+          self.dao.getWebsocket(peer_uid).send(self.buildAllLocMessage(locs))
         self.dao.insertLocation(msg['UID'], msg['LOC'])
       else:
         print 'fell through dispatch on message ' + str(message)

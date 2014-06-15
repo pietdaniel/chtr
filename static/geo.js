@@ -1,7 +1,7 @@
 function doGeoLocationJazz(callback) {
   if(navigator.geolocation) {
 
-    locationArray = new Array();
+  
 
     featureOpts = getMapFeatureOpts();
 
@@ -15,10 +15,12 @@ function doGeoLocationJazz(callback) {
 
     MY_MAP = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
+    MY_MAP.locationArray = new Array();
+
     function markPosition(image) {
       return function(x,y) {
         pos = new google.maps.LatLng(x,y);
-        locationArray.push(pos)
+        MY_MAP.locationArray.push(pos)
         new google.maps.Marker({
           position: pos,
           map: MY_MAP,
@@ -27,14 +29,15 @@ function doGeoLocationJazz(callback) {
       }
     }
 
+
     MY_MAP.addPosition = markPosition('http://c.tadst.com/gfx/n/icon/icon-map-pin.png');
     MY_MAP.myPosition = markPosition('https://cdn4.iconfinder.com/data/icons/miu/22/map_location_pin_map-marker-48.png');
 
     MY_MAP.getBounds = function() {
       var bounds = new google.maps.LatLngBounds();
-      if (locationArray.length > 1) {
-        for (var i = 0; i < locationArray.length; i++) {
-          bounds.extend(locationArray[i]);
+      if (MY_MAP.locationArray.length > 1) {
+        for (var i = 0; i < MY_MAP.locationArray.length; i++) {
+          bounds.extend(MY_MAP.locationArray[i]);
         }
         MY_MAP.fitBounds(bounds);
       }

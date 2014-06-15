@@ -32,16 +32,19 @@ class LocDataSource(object):
     print 'Started datasource'
 
   def delete(self,id):
-    del self.storage[id]
+    if (self.storage[str(id)]):
+      del self.storage[str(id)]
+    else:
+      print 'attempting to delete something that doesnt exist  ' + str(id)
 
   def put(self,id,obj):
     if (len(self.storage) > 1000):
       self.storage = dict()
-    self.storage[id] = obj
+    self.storage[str(id)] = obj
 
   def get(self,id):
     if id in self.storage:
-      return self.storage[id]
+      return self.storage[str(id)]
 
   def getAll(self):
     return self.storage.values()
