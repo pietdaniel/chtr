@@ -36,9 +36,8 @@ function doGeoLocationJazz(callback) {
         for (var i = 0; i < locationArray.length; i++) {
           bounds.extend(locationArray[i]);
         }
-        return bounds;
+        MY_MAP.fitBounds(bounds);
       }
-      
     }
 
     MY_MAP.mapTypes.set(MY_MAPTYPE_ID, customMapType);
@@ -52,7 +51,7 @@ function doGeoLocationJazz(callback) {
 
 
 function getMapOptions(MY_MAPTYPE_ID) {
-  return {zoom:4,mapTypeControlOptions:{mapTypeIds:[google.maps.MapTypeId.ROADMAP,MY_MAPTYPE_ID]},disableDefaultUI:true,mapTypeId:MY_MAPTYPE_ID};
+  return {zoom:12,mapTypeControlOptions:{mapTypeIds:[google.maps.MapTypeId.ROADMAP,MY_MAPTYPE_ID]},disableDefaultUI:true,mapTypeId:MY_MAPTYPE_ID};
 }
 
 function getMapFeatureOpts() {

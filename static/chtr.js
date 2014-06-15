@@ -14,9 +14,8 @@ function main() {
         MY_MAP.setCenter(pos);
         MY_MAP.myPosition(pos.k,pos.A);
         // MY_MAP.addPosition(45,-70)
-        
-        MY_MAP.fitBounds(MY_MAP.getBounds());
-
+        ws.send(buildLocation(pos.toString()));
+        MY_MAP.getBounds();
       });
         
 
@@ -58,6 +57,11 @@ function main() {
 
       function buildMessage(str) {
         out = { UID: ws.UID, MSG: str }
+        return JSON.stringify(out)
+      }
+
+      function buildLocation(loc) {
+        out = { UID: ws.UID, LOC: loc }
         return JSON.stringify(out)
       }
 
