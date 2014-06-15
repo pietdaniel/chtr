@@ -7,16 +7,16 @@ class WsDataSource(object):
     print 'Started datasource'
 
   def delete(self,id):
-    del self.storage[id]
+    del self.storage[str(id)]
 
   def put(self,id,obj):
     if (len(self.storage) > 1000):
       self.storage = dict()
-    self.storage[id] = obj
+    self.storage[str(id)] = obj
 
   def get(self,id):
     if id in self.storage:
-      return self.storage[id]
+      return self.storage[str(id)]
 
   def getAll(self):
     return self.storage.values()
