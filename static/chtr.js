@@ -13,7 +13,8 @@ function main() {
         pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         MY_MAP.setCenter(pos);
         MY_MAP.myPosition(pos.k,pos.A);
-        MY_MAP.addPosition(45,-70)
+        // MY_MAP.addPosition(45,-70)
+        
         MY_MAP.fitBounds(MY_MAP.getBounds());
 
       });

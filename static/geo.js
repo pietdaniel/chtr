@@ -32,10 +32,13 @@ function doGeoLocationJazz(callback) {
 
     MY_MAP.getBounds = function() {
       var bounds = new google.maps.LatLngBounds();
-      for (var i = 0; i < locationArray.length; i++) {
-        bounds.extend(locationArray[i]);
+      if (locationArray.length > 1) {
+        for (var i = 0; i < locationArray.length; i++) {
+          bounds.extend(locationArray[i]);
+        }
+        return bounds;
       }
-      return bounds;
+      
     }
 
     MY_MAP.mapTypes.set(MY_MAPTYPE_ID, customMapType);
