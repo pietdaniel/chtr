@@ -1,36 +1,22 @@
-
-function lg(str) {console.log(str);}
-
-// ********* GEOLOCATION *************//
-
-
-
-
-// ********* MAIN *************//
+var MY_MAP;
+var lg = console.log.bind( console );
 
 function scrollToBottom() {
   var mainDiv = $('#main');
   mainDiv.scrollTop(mainDiv.prop('scrollHeight'));
 }
 
-var MY_MAP;
-
 function main() {
     var ws = new getWebSocket(function(){
       doGeoLocationJazz(function(position) {
 
         pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
         MY_MAP.setCenter(pos);
-
         MY_MAP.myPosition(pos.k,pos.A);
-        
-        MY_MAP.addPosition(45,-70)
-
-        MY_MAP.fitBounds(MY_MAP.getBounds());
-
+        // MY_MAP.addPosition(45,-70)
+        ws.send(buildLocation(pos.toString()));
+        MY_MAP.getBounds();
       });
-        
 
       $("#chat-input").focus(); 
 
@@ -73,8 +59,12 @@ function main() {
         return JSON.stringify(out)
       }
 
+      function buildLocation(loc) {
+        out = { UID: ws.UID, LOC: loc }
+        return JSON.stringify(out)
+      }
+
     });
-    
 }
 
 $(document).ready(function(){
