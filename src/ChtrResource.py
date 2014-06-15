@@ -22,12 +22,12 @@ class Server(WebSocket):
       self.service = ChtrService()
  
     def opened(self):
-      print 'opened connection with ' + str(self.peer_address)
-      self.service.putWS(self.peer_address, self)
+      print 'opened connection with ' + str(self.peer_address[1])
+      self.service.putWS(self.peer_address[1], self)
 
     def received_message(self, message):
-      print "received message from peer " + str(self.peer_address) + " with message: " + str(message)
-      self.service.dispatch(message.data, self.peer_address)
+      print "received message from peer " + str(self.peer_address[1]) + " with message: " + str(message)
+      self.service.dispatch(message.data, self.peer_address[1])
   
 class ChtrResource(object):
   def __init__(self):

@@ -6,40 +6,45 @@ class ChtrService(object):
     self.dao = ChtrDao.Instance()
     self.count = 0
 
-  def dispatch(self, message, peer_address):
-    print 'dispatch ' + str(message) + ' ' + str(peer_address)
+  def buildAllLocMessage(self, locs):
+    out = { "LOCS": locs }
+    return json.dumps(out)
+
+  def dispatch(self, message, peer_uid):
+    print 'dispatch ' + str(message) + ' ' + str(peer_uid)
 
     try:
       msg = json.loads(message)
       if ('OPEN' in msg):
-        self.dao.getWebsocket(peer_address).send('{"UID":"'+str(peer_address)+'", "OPEN":"true"}')
+        self.dao.getWebsocket(peer_uid).send('{"UID":"'+str(peer_uid)+'", "OPEN":"true"}')
       elif ('MSG' in msg):
         flagged = []
-        for pa in self.dao.getAllWebsockets(peer_address):
+        for uid in self.dao.getAllWebsockets(peer_uid):
           try:
-            self.dao.getWebsocket(pa).send(message)
+            self.dao.getWebsocket(uid).send(message)
           except AttributeError as ae:
-            flagged.append(pa)
+            print 'invalid websocket with uid ' + str(uid)
+            flagged.append(uid)
             print ae
-        for pa in flagged:
-          self.dao.deleteWebsocket(pa)
-
+        for uid in flagged:
+          self.dao.deleteWebsocket(uid)
+          self.dao.deleteLocation(uid)
+      elif ('LOC' in msg):
+        locs = self.dao.getAllLocations()
+        if (len(locs) > 0):
+          self.dao.getWebsocket(peer_uid).send(self.buildAllLocMessage(locs))
+        self.dao.insertLocation(msg['UID'], msg['LOC'])
+      else:
+        print 'fell through dispatch on message ' + str(message)
     except ValueError as e:
       print e
 
-  def getObj(self, funcType, jsonBlob):
-    return funcType().deserialize(jsonBlob)
+ 
 
-  def toJSON(self, obj):
-    return json.dumps(obj)
-
-  def putWS(self, peer_address, ws):
+  def putWS(self, peer_uid, ws):
     print 'putWS'
-    self.dao.insertWebsocket(peer_address, ws)
-    print self.dao.getAllWebsockets(peer_address)
+    self.dao.insertWebsocket(peer_uid, ws)
+    print self.dao.getAllWebsockets(peer_uid)
     
-
-  def getWS(self, peer_address):
-    return self.dao.getWebsocket(peer_address)
-
-
+  def getWS(self, peer_uid):
+    return self.dao.getWebsocket(peer_uid)
