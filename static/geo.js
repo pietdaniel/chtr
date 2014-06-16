@@ -1,20 +1,14 @@
 function doGeoLocationJazz(callback) {
   if(navigator.geolocation) {
-
-  
-
+    // set the options
     featureOpts = getMapFeatureOpts();
-
     styledMapOptions = { name: 'Custom Style' };
-
     customMapType = new google.maps.StyledMapType(featureOpts, styledMapOptions);
-
     MY_MAPTYPE_ID = 'custom_style';
-
     mapOptions = getMapOptions(MY_MAPTYPE_ID);
 
+    // create the map
     MY_MAP = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
     MY_MAP.locationArray = new Array();
 
     function markPosition(image) {
@@ -28,7 +22,6 @@ function doGeoLocationJazz(callback) {
         });
       }
     }
-
 
     MY_MAP.addPosition = markPosition('http://c.tadst.com/gfx/n/icon/icon-map-pin.png');
     MY_MAP.myPosition = markPosition('https://cdn4.iconfinder.com/data/icons/miu/22/map_location_pin_map-marker-48.png');

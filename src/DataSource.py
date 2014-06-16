@@ -1,53 +1,38 @@
 import pickle
 from Singleton import singleton
 @singleton
-class WsDataSource(object):
+class DataSource(object):
   def __init__(self):
-    self.storage = dict()
     print 'Started datasource'
-
-  def delete(self,id):
-    del self.storage[str(id)]
-
-  def put(self,id,obj):
-    if (len(self.storage) > 1000):
-      self.storage = dict()
-    self.storage[str(id)] = obj
-
-  def get(self,id):
-    if id in self.storage:
-      return self.storage[str(id)]
-
-  def getAll(self):
-    return self.storage.values()
-
-  def save(self):
-    with open("websockets.pickle", "wb") as f:
-      pickle.dump(self.storage, f)
-
-@singleton
-class LocDataSource(object):
-  def __init__(self):
     self.storage = dict()
-    print 'Started datasource'
 
-  def delete(self,id):
-    if (self.storage[str(id)]):
-      del self.storage[str(id)]
-    else:
-      print 'attempting to delete something that doesnt exist  ' + str(id)
+  def makeTables(self, listOfTables):
+    for tableKey in listOfTables:
+      self.storage[tableKey] = dict()
 
-  def put(self,id,obj):
-    if (len(self.storage) > 1000):
-      self.storage = dict()
-    self.storage[str(id)] = obj
+  def delete(self,id,tableKey):
+    self.storage[tableKey][id] = False
 
-  def get(self,id):
-    if id in self.storage:
-      return self.storage[str(id)]
+  def put(self,id,obj, tableKey):
+    print 'get ' + str(id) + ' ' + str(type(id)) + ' ' + tableKey
+    if (len(self.storage[tableKey]) > 1000):
+      self.storage[tableKey] = dict()
+    self.storage[tableKey][id] = obj
 
-  def getAll(self):
-    return self.storage.values()
+  def get(self,id,tableKey):
+    print 'get ' + str(id) + ' ' + str(type(id)) + ' ' + tableKey
+    if id in self.storage[tableKey]:
+      out =  self.storage[tableKey][id]
+      if (out):
+        return out
+    print 'id ' + str(id) + 'not found in ' + str(tableKey)
+
+  def getAll(self,tableKey):
+    out = dict()
+    for key in self.storage[tableKey]:
+      if self.storage[tableKey][key]:
+        out[key] = self.storage[tableKey][key]
+    return out
 
   def save(self):
     with open("websockets.pickle", "wb") as f:

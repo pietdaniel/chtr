@@ -13,6 +13,10 @@ function getWebSocket(onopen) {
       console.log('WebSocket Error ' + error);
     };
 
+    connection.onclose = function (close) {
+      console.log("WebSocket Close " + close);
+    }
+
     connection.onmessage = function (e) {
       console.log('Server: ' + e.data);
       blob = $.parseJSON(e.data)
@@ -26,22 +30,28 @@ function getWebSocket(onopen) {
       if (blob.LOCS) {
         var locSet = {};
         var arr = eval(blob.LOCS);
+
         for (var loc in arr) {
           var re = /(\-?[0-9]*\.\-?[0-9]*)/g
           var locArray = arr[loc].match(re);
           locSet[arr[loc]]=locArray.map(parseFloat)
         }
+
         for (k in locSet) {
           for (var q in MY_MAP.locationArray) {
             var keyPair = "("+MY_MAP.locationArray[q].k+", "+MY_MAP.locationArray[q].A+")";
             delete locSet[keyPair]
           }
         }
+
         for (k in locSet) {
           MY_MAP.addPosition(locSet[k][0],locSet[k][1])
+          MY_MAP.getBounds()
         }
+
       }
     };
+
 
 
 
