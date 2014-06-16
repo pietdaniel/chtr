@@ -23,7 +23,7 @@ class ChtrService(object):
         locs = self.dao.getAllLocations()
         if (len(locs) > 0):
           self.broadcast(self.buildAllLocMessage(locs))
-        self.dao.insertLocation(msg['UID'], msg['LOC'])
+        self.dao.insertLocation(peer_uid, msg['LOC'])
       else:
         print 'fell through dispatch on message ' + str(message)
     except ValueError as e:
