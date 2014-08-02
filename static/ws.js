@@ -1,5 +1,5 @@
 function getWebSocket(onopen) {
-    connection = new WebSocket("ws://localhost:9000/chtr");
+    connection = new WebSocket("ws://piet.us/chtr");
     // connection.setMaxIdleTime(1000 * 60 * 60)
 
     connection.onopen = function () {

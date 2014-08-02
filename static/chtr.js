@@ -9,10 +9,10 @@ function scrollToBottom() {
 function main() {
     var ws = new getWebSocket(function(){
       doGeoLocationJazz(function(position) {
-
         pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        lg(pos);
         MY_MAP.setCenter(pos);
-        MY_MAP.myPosition(pos.k,pos.A);
+        MY_MAP.myPosition(pos.k,pos.B);
         ws.send(buildLocation(pos.toString()));
         MY_MAP.getBounds();
       });

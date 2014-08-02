@@ -1,5 +1,6 @@
 from ChtrDao import ChtrDao
 import json
+from ast import literal_eval 
 
 class ChtrService(object):
   def __init__(self):
@@ -23,7 +24,11 @@ class ChtrService(object):
         locs = self.dao.getAllLocations()
         if (len(locs) > 0):
           self.broadcast(self.buildAllLocMessage(locs))
-        self.dao.insertLocation(peer_uid, msg['LOC'])
+        try:
+          loc_tuple = literal_eval(msg['LOC'])
+          self.dao.insertLocation(peer_uid, msg['LOC'])
+        except ValueError as e:
+          print "tuple was malformed " + msg['LOC']
       else:
         print 'fell through dispatch on message ' + str(message)
     except ValueError as e:

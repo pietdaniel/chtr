@@ -23,8 +23,8 @@ function doGeoLocationJazz(callback) {
       }
     }
 
-    MY_MAP.addPosition = markPosition('http://c.tadst.com/gfx/n/icon/icon-map-pin.png');
-    MY_MAP.myPosition = markPosition('https://cdn4.iconfinder.com/data/icons/miu/22/map_location_pin_map-marker-48.png');
+    MY_MAP.addPosition = markPosition('icon-map-pin.png');
+    MY_MAP.myPosition = markPosition('map_location_pin_map-marker-48.png');
 
     MY_MAP.getBounds = function() {
       var bounds = new google.maps.LatLngBounds();
