@@ -4,7 +4,7 @@ from ws4py.websocket import WebSocket
 from ChtrService import ChtrService
 import json
 
-cherrypy.config.update({'server.socket_port': 9000})
+cherrypy.config.update({'server.socket_port': 8010})
 WebSocketPlugin(cherrypy.engine).subscribe()
 cherrypy.tools.websocket = WebSocketTool()
 
